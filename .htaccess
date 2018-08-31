@@ -1,0 +1,46 @@
+<IfModule mod_rewrite.c>
+    Options +FollowSymlinks
+    RewriteEngine On
+</IfModule>
+
+<IfModule mod_rewrite.c>
+
+    #RewriteCond %{HTTP_HOST} ^many\.com\.ua$ [OR]
+    #RewriteCond %{HTTP_HOST} ^www\.many\.com\.ua$
+    #RewriteCond %{REQUEST_URI} !^/[0-9]+\..+\.cpaneldcv$
+    #RewriteCond %{REQUEST_URI} !^/\.well-known/acme-challenge/[0-9a-zA-Z_-]+$
+    #RewriteCond %{REQUEST_URI} !^/\.well-known/pki-validation/[A-F0-9]{32}\.txt(?:\ Comodo\ DCV)?$
+    #RewriteRule ^/?$ "http\:\/\/novinki\.top\/many" [R=302,L]
+
+    Redirect 302 /magnikon http://magnikon.in.ua
+    Redirect 302 /rory http://rory.com.ua
+    Redirect 302 /kinderwatch http://kinderwatch.me
+    Redirect 302 /biorhythm http://biorhythm.com.ua
+    Redirect 302 /noncontact http://noncontact.com.ua
+    Redirect 302 /sunnails http://sunnails.com.ua
+    Redirect 302 /alco-test http://alco-test.com.ua
+    Redirect 302 /jelly-belly http://jelly-belly.in.ua
+    Redirect 302 /many http://many.com.ua
+
+    # если /admin, то в backend
+    RewriteCond %{REQUEST_URI} ^/(admin)
+    RewriteRule ^admin/assets/(.*)$ backend/web/assets/$1 [L]
+    RewriteRule ^admin/css/(.*)$ backend/web/css/$1 [L]
+    RewriteRule ^admin/js/(.*)$ backend/web/js/$1 [L]
+    RewriteRule ^admin/img/(.*)$ backend/web/img/$1 [L]
+    RewriteCond %{REQUEST_URI} !^/backend/web/(assets|js|css|img)/
+    RewriteCond %{REQUEST_URI} ^/(admin)
+    RewriteRule ^.*$ backend/web/index.php [L]
+    RewriteCond %{REQUEST_URI} ^/(assets|css|js|images|output|img|upload)
+    RewriteRule ^output/(.*)$ output/$1 [L]
+    RewriteRule ^assets/(.*)$ frontend/web/assets/$1 [L]
+    RewriteRule ^css/(.*)$ frontend/web/css/$1 [L]
+    RewriteRule ^js/(.*)$ frontend/web/js/$1 [L]
+    RewriteRule ^img/(.*)$ frontend/web/img/$1 [L]
+    RewriteRule ^(.*)$ frontend/web/$1 [L]
+    RewriteCond %{REQUEST_URI} !^/(frontend|backend)/web/(assets|css|js|img|upload)/
+    RewriteCond %{REQUEST_URI} !index.php
+    RewriteCond %{REQUEST_FILENAME} !-f [OR]
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^.*$ frontend/web/index.php
+</IfModule>
